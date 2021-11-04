@@ -1,4 +1,4 @@
-PLUGINS=day01 day02
+PLUGINS=day01 day02 day03
 
 PLUGIN_LIBS=$(foreach p, $(PLUGINS), plugins/$(p).so)
 
