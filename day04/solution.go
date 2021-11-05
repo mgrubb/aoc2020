@@ -130,14 +130,8 @@ func part2IsValid(pp passport) bool {
 
 func collapseRecs(lines []string) []string {
 	recs := []string{}
-	start := 0
-	for i, l := range lines {
-		if len(l) == 0 {
-			recs = append(recs, strings.Join(lines[start:i], " "))
-			start = i + 1
-		} else if i == len(lines)-1 {
-			recs = append(recs, strings.Join(lines[start:], " "))
-		}
+	for _, group := range scanner.ScanGroups(lines) {
+		recs = append(recs, strings.Join(group, " "))
 	}
 	return recs
 }
