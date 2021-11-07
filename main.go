@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/mgrubb/aoc2020/plugin"
@@ -85,6 +86,15 @@ func runPlugins(plugins []plugin.Plugin) {
 	}
 }
 
+func parsePluginName(arg string) string {
+	if strings.HasPrefix(arg, "day") {
+		return arg
+	}
+	i, err := strconv.Atoi(arg)
+	must(err)
+	return fmt.Sprintf("day%02d", i)
+}
+
 func main() {
 	must(plugin.PluginManager.LoadPlugins("plugins"))
 
@@ -96,7 +106,8 @@ func main() {
 	var plugins []plugin.Plugin
 	if len(nonFlags) > 0 {
 		for _, arg := range nonFlags {
-			p, ok := plugin.PluginManager.PluginByName(arg)
+			pluginName := parsePluginName(arg)
+			p, ok := plugin.PluginManager.PluginByName(pluginName)
 			if !ok {
 				must(fmt.Errorf("Not plugin named %s found", arg))
 			}
